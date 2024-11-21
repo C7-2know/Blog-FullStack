@@ -24,6 +24,9 @@ type Env struct {
 	CloudName string `mapstructure:"CLOUD_NAME"`
 	ApiKey  string `mapstructure:"CLOUD_API_KEY"`
 	ApiSec  string `mapstructure:"CLOUD_API_SECRET"`
+	TwilloAccountSID string `mapstructure:"TWILIO_ACCOUNT_SID"`
+	TwilloAuthToken string `mapstructure:"TWILIO_AUTH_TOKEN"`
+	TwilloNumber string `mapstructure:"TWILIO_NUMBER"`
 
 
 }

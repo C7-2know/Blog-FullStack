@@ -21,7 +21,7 @@ func Setup(gin *gin.Engine){
 	tokenService:=service.NewTokenService(env.AccessTokenSecret,env.RefreshTokenSecret,tokenRepo,userRepo)
 	authmiddleware:=middleware.NewAuthMiddleware(tokenService)
 
-	NewOTPRouter(otp)
+	NewOTPRouter(otp,env)
 	
 	publicAuthRouter:=gin.Group("/auth")
 	publicAuthRouter.Use()
