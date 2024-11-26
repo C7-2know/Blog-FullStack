@@ -9,9 +9,17 @@ type RegisterUserDto struct {
 	Username string             `json:"username" binding:"required"`
 	Email    string             `json:"email" binding:"required"`
 	Password string             `json:"password" binding:"required"`
+	
 }
 
 type UserLoginDto struct{
 	Email string `json:"email"`
 	Password string `json:"password"`
+}
+
+type UserResponseDto struct{
+	ID primitive.ObjectID `json:"id"`
+	Username string `json:"Username"`
+	Email string `json:"Email"`
+	Role string `json:"Role"`
 }
