@@ -6,6 +6,7 @@ import (
 	"context"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -28,15 +29,23 @@ func (r *defaultImageRepository) CreateDefaultImage(url,publicID string) error {
 }
 
 func (r *defaultImageRepository) DeleteDefaultImage(id string) error {
-	_,err:=r.collection.DeleteOne(context.TODO(),bson.D{{"_id",id}})
+	imageId,err:=primitive.ObjectIDFromHex(id)
+	if err!=nil{
+		return err
+	}
+	_,err=r.collection.DeleteOne(context.TODO(),bson.D{{"_id",imageId}})
 	if err!=nil{
 		return err
 	}
 	return nil
 }
 func (r *defaultImageRepository) GetDefaultImage(id string) (*entities.DefaultImage,error) {
+	imageId,err:=primitive.ObjectIDFromHex(id)
+	if err!=nil{
+		return nil,err
+	}
 	var defaultImage entities.DefaultImage
-	err:=r.collection.FindOne(context.TODO(),bson.D{{"_id",id}}).Decode(&defaultImage)
+	err=r.collection.FindOne(context.TODO(),bson.D{{"_id",imageId}}).Decode(&defaultImage)
 	if err!=nil{
 		return nil,err
 	}
