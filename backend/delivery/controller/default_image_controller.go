@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"backend-starter-project/domain/dtos"
 	"backend-starter-project/domain/interfaces"
 
 	"github.com/gin-gonic/gin"
@@ -20,7 +21,14 @@ func (c *DefaultImageController) GetDefaultImages(ctx *gin.Context) {
 		ctx.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
-	ctx.JSON(200, gin.H{"images": images})
+	response:=[]dtos.ImageResponseDto{}
+	for _,image:=range images{
+		response=append(response,dtos.ImageResponseDto{
+			Id: image.Id.Hex(),
+			Url: image.Url,
+		})
+	}
+	ctx.JSON(200, gin.H{"images": response})
 	return
 }
 
