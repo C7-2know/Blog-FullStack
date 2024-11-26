@@ -41,9 +41,15 @@ func (controller *AuthController) Login(c *gin.Context) {
 		c.JSON(400, gin.H{"message": err.Error()})
 		return
 	}
+	user_res:=dtos.UserResponseDto{
+		ID: user.ID,
+		Email: user.Email,
+		Username: user.Username,
+		Role: user.Role,
+	}
 	c.SetCookie("access_token", accessToken, 3600, "/", "localhost", false, false)
 	c.SetCookie("refresh_token", refreshToken.Token, int(refreshToken.ExpiresAt.Unix()), "/", "localhost", false, false)
 	c.Header("Authorization", "Bearer "+accessToken)
-	c.JSON(200, gin.H{"message": "login successful", "user": user,"accessToken":accessToken})
+	c.JSON(200, gin.H{"message": "login successful", "user": user_res,"accessToken":accessToken})
 	return
 }
