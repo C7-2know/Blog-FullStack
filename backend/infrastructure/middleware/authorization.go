@@ -31,10 +31,9 @@ func (middleware *authMiddleware) AuthMiddleware(role string) gin.HandlerFunc {
 		// }
 		refresh, err := c.Cookie("refresh_token")
 		if err != nil {
-			fmt.Println("error from auth middleware: second err", err)
 			err := middleware.TokenService.VerifyRefreshToken(refresh)
 			if err != nil {
-				fmt.Println("error from auth middleware: first err", err)
+				
 				c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
 				c.Abort()
 				return
